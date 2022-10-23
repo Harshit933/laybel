@@ -1,9 +1,10 @@
 import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/Const/fonts.dart';
 import 'package:firebase/Screens/payment_details.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../resources/firebase_auth.dart';
 
 class AboutYou extends StatefulWidget {
   const AboutYou({Key? key}) : super(key: key);
@@ -13,24 +14,40 @@ class AboutYou extends StatefulWidget {
 }
 
 class _AboutYouState extends State<AboutYou> {
-
   final _name = TextEditingController();
   final _age = TextEditingController();
   final _pronouns = TextEditingController();
   final _phonenumber = TextEditingController();
+  Auth auth = Auth();
 
-  Future addUserDetails(String Name, String Age, String Pronouns, String PhoneNumber) async {
+  Future addUserDetails(
+      String Name, String Age, String Pronouns, String PhoneNumber) async {
     await FirebaseFirestore.instance.collection('users').add({
-      'Name' :Name,
-      'Age' :Age,
-      'Pronouns' : Pronouns,
-      'email' : PhoneNumber,
+      'Name': Name,
+      'Age': Age,
+      'Pronouns': Pronouns,
+      'email': PhoneNumber,
     });
   }
 
-  void nextPage () async {
-    addUserDetails(_name.text.trim(), _age.text.trim(), _pronouns.text.trim(), _phonenumber.text.trim());
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaymentDetails()));
+  void nextPage() async {
+    String? user;
+    // addUserDetails(_name.text.trim(), _age.text.trim(), _pronouns.text.trim(), _phonenumber.text.trim());
+    // final userCredential =
+    // await FirebaseAuth.instance.signInWithCredential(credential);
+    if (FirebaseAuth.instance.currentUser != null) {
+      print(FirebaseAuth.instance.currentUser);
+      user = await FirebaseAuth.instance.currentUser?.uid;
+    }
+    auth.Details(
+      username: _name.text,
+      pronouns: _pronouns.text,
+      age: _age.text,
+      phonenumber: _phonenumber.text,
+      credential: user,
+    );
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => PaymentDetails()));
   }
 
   @override
@@ -43,10 +60,7 @@ class _AboutYouState extends State<AboutYou> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 33),
-              child: Text(
-                'About\nYou',
-                style: font,
-              ),
+              child: Text('About\nYou', style: font),
             ),
             Padding(
               padding: EdgeInsets.only(left: 35, right: 27, top: 16),
@@ -64,10 +78,7 @@ class _AboutYouState extends State<AboutYou> {
                       filled: true,
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
                       hintText: 'Name',
-                      hintStyle: TextStyle(
-                          fontSize: 14
-                      )
-                  ),
+                      hintStyle: TextStyle(fontSize: 14)),
                   controller: _name,
                 ),
               ),
@@ -88,10 +99,7 @@ class _AboutYouState extends State<AboutYou> {
                       filled: true,
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
                       hintText: 'Age',
-                      hintStyle: TextStyle(
-                          fontSize: 14
-                      )
-                  ),
+                      hintStyle: TextStyle(fontSize: 14)),
                   controller: _age,
                 ),
               ),
@@ -112,10 +120,7 @@ class _AboutYouState extends State<AboutYou> {
                       filled: true,
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
                       hintText: 'Pronouns',
-                      hintStyle: TextStyle(
-                          fontSize: 14
-                      )
-                  ),
+                      hintStyle: TextStyle(fontSize: 14)),
                   controller: _pronouns,
                 ),
               ),
@@ -136,10 +141,7 @@ class _AboutYouState extends State<AboutYou> {
                       filled: true,
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
                       hintText: 'Phone number',
-                      hintStyle: TextStyle(
-                          fontSize: 14
-                      )
-                  ),
+                      hintStyle: TextStyle(fontSize: 14)),
                   controller: _phonenumber,
                 ),
               ),
@@ -158,10 +160,7 @@ class _AboutYouState extends State<AboutYou> {
                       onPressed: nextPage,
                       child: Text(
                         'Next',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14
-                        ),
+                        style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ),
                   ),

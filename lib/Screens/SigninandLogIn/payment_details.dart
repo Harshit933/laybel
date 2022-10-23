@@ -1,6 +1,9 @@
 import 'package:firebase/Const/fonts.dart';
 import 'package:flutter/material.dart';
 
+import '../resources/firebase_auth.dart';
+import 'all_set_up.dart';
+
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({Key? key}) : super(key: key);
 
@@ -9,7 +12,6 @@ class PaymentDetails extends StatefulWidget {
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
-
   final _paymentcontroller = TextEditingController();
 
   @override
@@ -43,11 +45,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       ),
                       filled: true,
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
-                      hintText: 'Enter OTP',
-                      hintStyle: TextStyle(
-                          fontSize: 14
-                      )
-                  ),
+                      hintText: 'Enter UPI ID',
+                      hintStyle: TextStyle(fontSize: 14)),
                 ),
               ),
             ),
@@ -62,13 +61,16 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       height: 47,
                       elevation: 0,
                       color: Color.fromRGBO(25, 208, 120, 1),
-                      onPressed: (){},
+                      onPressed: () async {
+                        Auth auth = Auth();
+                        await auth.updatePayment(_paymentcontroller.text);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AllSetUp()));
+                        print('done');
+                      },
                       child: Text(
                         'Next',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14
-                        ),
+                        style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ),
                   ),
