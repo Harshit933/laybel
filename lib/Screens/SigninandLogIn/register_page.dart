@@ -37,6 +37,19 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Auth auth = Auth();
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_left),
+          iconSize: 45,
+        ),
+        shadowColor: null,
+        elevation: 0,
+        foregroundColor: Color.fromRGBO(218, 218, 218, 1),
+        backgroundColor: Colors.white,
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     email: _email.text,
                     password: _password.text,
                   );
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => VerifyPage(Email: _email),
                     ),
@@ -153,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     child: Center(
                       child: Text(
-                        'Log In',
+                        'Sign Up',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.spaceGrotesk(
                           fontWeight: FontWeight.bold,

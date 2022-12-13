@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class userModel {
   final String username;
@@ -7,6 +6,8 @@ class userModel {
   final String pronouns;
   final String age;
   final String phonenumber;
+  final String usernameReal;
+  final String profilephoto;
 
   const userModel({
     required this.username,
@@ -14,6 +15,8 @@ class userModel {
     required this.pronouns,
     required this.age,
     required this.phonenumber,
+    required this.usernameReal,
+    required this.profilephoto,
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +37,8 @@ class userModel {
       pronouns: snapshot['pronouns'],
       age: snapshot['age'],
       phonenumber: snapshot['phonenumber'],
+      usernameReal: snapshot['usernameReal'],
+      profilephoto: snapshot['profilephoto'],
     );
   }
 }

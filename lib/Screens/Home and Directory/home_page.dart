@@ -3,9 +3,11 @@ import 'package:firebase/Screens/Home%20and%20Directory/user_home.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_message.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_notif.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_profile.dart';
+import 'package:firebase/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,6 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // addData();
   }
 
   @override
@@ -45,11 +48,6 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            FeatherIcons.shoppingBag,
-            size: 25,
-            color: Colors.black,
-          ),
           backgroundColor: Color.fromRGBO(243, 243, 243, 1),
           foregroundColor: Color.fromRGBO(243, 243, 243, 1),
           toolbarHeight: 60,
@@ -63,6 +61,16 @@ class _HomePageState extends State<HomePage> {
               color: Colors.purple,
             ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                FeatherIcons.shoppingBag,
+                size: 25,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: page[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

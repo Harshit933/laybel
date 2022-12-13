@@ -41,8 +41,9 @@ class _AllSetUpState extends State<AllSetUp> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
                         },
                         child: InkWell(
                           splashColor: Colors.white,

@@ -67,7 +67,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     onTap: () async {
                       Auth auth = Auth();
                       await auth.updatePayment(_paymentcontroller.text);
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => AllSetUp()));
                       print('done');
                     },

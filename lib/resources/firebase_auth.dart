@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase/models/usermodel.dart';
+import 'package:firebase/resources/storage_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import '../models/usermodel.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -33,12 +35,15 @@ class Auth {
   }
 
   // to get the details of the user, it is connected to the register page of the app
-  Future Details(
-      {required String username,
-      required String pronouns,
-      required String age,
-      required String phonenumber,
-      required String? credential}) async {
+  Future Details({
+    required String username,
+    required String pronouns,
+    required String age,
+    required String phonenumber,
+    required String? credential,
+    required String usernameReal,
+    required String profilephoto,
+  }) async {
     if (username.isNotEmpty ||
         pronouns.isNotEmpty ||
         age.isNotEmpty ||
@@ -50,12 +55,26 @@ class Auth {
         'pronouns': pronouns,
         'age': age,
         'phonenumber': phonenumber,
-        'uid': usercred?.uid
+        'uid': usercred?.uid,
+        'usernameReal': usernameReal,
+        'profilephoto': profilephoto,
       });
       print('success');
     } else {
       print("Data not added");
     }
+  }
+
+  Future<void> ChangeProfileImage(Uint8List profileImageasList) async {
+    StorageMethods methods = StorageMethods();
+    String profileImage = await methods.updatePFP(profileImageasList);
+
+    _firestore
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'profilephoto': profileImage,
+    });
   }
 
   // sending verification mail to the user

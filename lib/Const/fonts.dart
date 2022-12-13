@@ -20,3 +20,26 @@ const placeholder = TextStyle(
   fontWeight: FontWeight.normal,
   color: Color.fromRGBO(0, 0, 0, 0.5),
 );
+
+const headingfont = TextStyle(
+  fontFamily: 'Satoshi-bold',
+  fontSize: 20,
+);
+
+const containerfont = TextStyle(
+  fontFamily: 'Satoshi-regular',
+  fontSize: 15,
+  color: Colors.black,
+);
+
+const profilefont = TextStyle(
+  fontFamily: 'Satoshi-bold',
+  fontSize: 15,
+  color: Colors.black,
+);
+
+const likesfont = TextStyle(
+  fontFamily: 'Satoshi-bold',
+  fontSize: 15,
+  color: Colors.black,
+);

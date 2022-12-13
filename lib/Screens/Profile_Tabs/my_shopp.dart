@@ -1,7 +1,13 @@
+import 'dart:typed_data';
+
+import 'package:firebase/utils/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase/provider/user_provider.dart';
 import '../../models/usermodel.dart';
+import '../../resources/firebase_auth.dart';
 
 class MyshopPage extends StatefulWidget {
   const MyshopPage({Key? key}) : super(key: key);
@@ -11,11 +17,6 @@ class MyshopPage extends StatefulWidget {
 }
 
 class _MyshopPageState extends State<MyshopPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // context is only available inside the build widget
@@ -32,9 +33,20 @@ class _MyshopPageState extends State<MyshopPage> {
             padding: EdgeInsets.only(left: 12, right: 30),
             child: Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: Color.fromRGBO(157, 62, 216, 1),
-                  radius: 54,
+                GestureDetector(
+                  onTap: () async {
+                    Auth auth = Auth();
+                    Uint8List profileImage =
+                        await imagepicker(ImageSource.gallery);
+                    auth.ChangeProfileImage(profileImage);
+                    UserProvider provider = UserProvider();
+                    await provider.refreshUser();
+                  },
+                  child: CircleAvatar(
+                    // backgroundColor: Color.fromRGBO(157, 62, 216, 1),
+                    backgroundImage: NetworkImage(_user.profilephoto),
+                    radius: 54,
+                  ),
                 ),
                 SizedBox(
                   width: 21,
@@ -44,7 +56,6 @@ class _MyshopPageState extends State<MyshopPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
                         children: [
@@ -57,7 +68,7 @@ class _MyshopPageState extends State<MyshopPage> {
                             ),
                           ),
                           Text(
-                            '  ' + _user.pronouns,
+                            _user.pronouns,
                             style: TextStyle(
                               fontSize: 12,
                               // fontWeight: FontWeight.w100,

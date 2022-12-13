@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../utils/image_picker.dart';
+import '../resources/add_post_helper.dart';
 
 class AddPhoto extends StatefulWidget {
   const AddPhoto({
@@ -18,6 +19,14 @@ class _AddPhotoState extends State<AddPhoto> {
   Uint8List? _file;
   bool hasImage = false;
 
+  // AddpostHelper help = AddpostHelper();
+
+  final List<Uint8List?> imagelist = [];
+
+  List<Uint8List?> getList() {
+    return imagelist;
+  }
+
   _selectImage(BuildContext context) async {
     return showDialog(
       context: context,
@@ -31,8 +40,11 @@ class _AddPhotoState extends State<AddPhoto> {
               onPressed: () async {
                 Navigator.pop(context);
                 _file = await imagepicker(ImageSource.camera);
+                AddpostHelper.set(_file!);
                 setState(() {
-                  hasImage = true;
+                  if (_file != null) {
+                    hasImage = true;
+                  }
                 });
               },
             ),
@@ -41,10 +53,61 @@ class _AddPhotoState extends State<AddPhoto> {
               child: Text('Select a photo from gallery'),
               onPressed: () async {
                 Navigator.pop(context);
-                Uint8List file = imagepicker(ImageSource.gallery);
+                _file = await imagepicker(ImageSource.gallery);
+                AddpostHelper.set(_file!);
+                setState(
+                  () {
+                    hasImage = true;
+                  },
+                );
+              },
+            ),
+            SimpleDialogOption(
+              padding: EdgeInsets.all(25),
+              child: Text('Cancel'),
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  _removeImage(BuildContext context) async {
+    return showDialog(
+      anchorPoint: Offset(12, 12),
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text('Delete photo'),
+          children: [
+            SimpleDialogOption(
+              padding: EdgeInsets.all(25),
+              child: Text('Retake Photo'),
+              onPressed: () async {
                 setState(() {
-                  _file = file;
+                  hasImage = false;
                 });
+                AddpostHelper.deleteImage(_file!);
+                Navigator.pop(context);
+                _file = await imagepicker(ImageSource.camera);
+                AddpostHelper.set(_file!);
+                setState(() {
+                  hasImage = true;
+                });
+              },
+            ),
+            SimpleDialogOption(
+              padding: EdgeInsets.all(25),
+              child: Text('Remove'),
+              onPressed: () async {
+                setState(() {
+                  hasImage = false;
+                });
+                AddpostHelper.deleteImage(_file!);
+                Navigator.pop(context);
               },
             ),
             SimpleDialogOption(
@@ -83,19 +146,24 @@ class _AddPhotoState extends State<AddPhoto> {
               ),
             ),
           )
-        : Container(
-            width: 100,
-            height: 100,
-            decoration: ShapeDecoration(
-              color: Color(0xffe0e0e0),
-              image: DecorationImage(
-                image: MemoryImage(_file!),
-                fit: BoxFit.fill,
-              ),
-              shape: SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius(
-                  cornerRadius: 8,
-                  cornerSmoothing: 0.6,
+        : GestureDetector(
+            onLongPress: () async {
+              _removeImage(context);
+            },
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: ShapeDecoration(
+                color: Color(0xffe0e0e0),
+                image: DecorationImage(
+                  image: MemoryImage(_file!),
+                  fit: BoxFit.contain,
+                ),
+                shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius(
+                    cornerRadius: 8,
+                    cornerSmoothing: 0.6,
+                  ),
                 ),
               ),
             ),

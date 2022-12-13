@@ -27,8 +27,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // userModel _user = Provider.of<UserProvider>(context).getUser;
-
     return DefaultTabController(
       length: 4,
       child: SafeArea(

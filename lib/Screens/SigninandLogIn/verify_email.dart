@@ -40,7 +40,6 @@ class _VerifyPageState extends State<VerifyPage> {
 
   @override
   void dispose() {
-    _otpcontroller.dispose();
     timer?.cancel();
     super.dispose();
   }
