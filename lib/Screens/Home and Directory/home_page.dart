@@ -1,9 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/Const/fonts.dart';
-import 'package:firebase/Screens/all_logins.dart';
-import 'package:firebase/read_data/get_user_details.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/user_add.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/user_home.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/user_message.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/user_notif.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/user_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,62 +14,30 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class tabOptions extends StatelessWidget {
-  const tabOptions({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Icon(
-        Icons.shopping_bag,
-        size: 50,
-        color: Colors.black,
-      ),
-    );
-  }
-}
-
 class _HomePageState extends State<HomePage> {
   bool _isLogOut = false;
+  int _selectedIndex = 0;
 
-  Future logOut() async {
-    await FirebaseAuth.instance.signOut();
-    print('Succesfully logged out');
-    _isLogOut = true;
+  void _navigateBottomBar(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  List tabOptions = const [
-    ["Feed", 'tabOptions()']
+  final List<dynamic> page = [
+    HomePageReal(),
+    Message(),
+    PostPage(),
+    NotificationPage(),
+    ProfilePage(),
   ];
 
-  List<Widget> docIDs = [
-    Icon(
-      Icons.shopping_bag,
-      size: 50,
-      color: Colors.black,
-    ),
-    Icon(
-      Icons.shopping_bag,
-      size: 50,
-      color: Colors.black,
-    ),
-    Icon(
-      Icons.shopping_bag,
-      size: 50,
-      color: Colors.black,
-    ),
-  ];
+  //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage())),
 
-  // Future gETIDs() async {
-  //   await FirebaseFirestore.instance.collection('users').get().then(
-  //         (snapshot) => snapshot.docs.forEach(
-  //           (document) {
-  //             print(document.reference);
-  //             docIDs.add(document.reference.id);
-  //           },
-  //         ),
-  //       );
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,79 +45,84 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          toolbarHeight: 88,
+          leading: Icon(
+            FeatherIcons.shoppingBag,
+            size: 25,
+            color: Colors.black,
+          ),
+          backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+          foregroundColor: Color.fromRGBO(243, 243, 243, 1),
+          toolbarHeight: 60,
           centerTitle: true,
           elevation: 0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(flex: 1, child: Container()),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  'Laybel',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    color: Colors.blue,
-                    fontSize: 50,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.shopping_bag,
-                  size: 50,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+          title: Text(
+            'appname',
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.purple,
+            ),
           ),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              TabBar(
-                indicatorColor: Colors.black,
-                labelColor: Colors.black,
-                tabs: [
-                  Tab(
-                    text: 'Feed',
-                  ),
-                  Tab(
-                    text: 'Explore',
-                  ),
-                ],
-              )
-            ],
-          ),
+        body: page[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          iconSize: 50,
+          elevation: 0,
+          currentIndex: _selectedIndex,
+          onTap: _navigateBottomBar,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+              icon: Icon(
+                FeatherIcons.home,
+                size: 30,
+                color: Colors.grey[700],
+              ),
+              label: '',
+              // tooltip: 'Home',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+              icon: Icon(
+                FeatherIcons.messageSquare,
+                size: 30,
+                color: Colors.grey[700],
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+              icon: Icon(
+                FeatherIcons.plusCircle,
+                size: 30,
+                color: Colors.grey[700],
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+              icon: Icon(
+                FeatherIcons.heart,
+                size: 30,
+                color: Colors.grey[700],
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color.fromRGBO(243, 243, 243, 1),
+              icon: Icon(
+                FeatherIcons.box,
+                size: 30,
+                color: Colors.grey[700],
+              ),
+              label: '',
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-/*
-MaterialButton(
-              onPressed: () async {
-                await logOut();
-                if (_isLogOut) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => startPage(),
-                    ),
-                  );
-                }
-              },
-              color: Colors.orange,
-              child: Text(
-                'Sign Out',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
-              ),
-            ),
- */

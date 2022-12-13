@@ -38,6 +38,13 @@ dependencies:
   cloud_firestore: ^3.5.1
   email_auth: ^1.0.0
   otp_text_field: ^1.1.3
+  firebase_database: ^9.1.7
+  figma_squircle: ^0.5.3
+  google_fonts: ^3.0.1
+  flutter_feather_icons: ^2.0.0+1
+  provider: ^6.0.4
+  file_picker: ^5.2.2
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
@@ -62,9 +69,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - Icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -81,6 +87,26 @@ flutter:
     - family: Inter
       fonts:
         - asset: fonts/Inter-Bold.ttf
+
+    - family: Space-bold
+      fonts:
+        - asset: fonts/SpaceGrotesk-Bold.ttf
+
+    - family: Space-regular
+      fonts:
+        - asset: fonts/SpaceGrotesk-Regular.ttf
+
+    - family: Satoshi
+      fonts:
+        - asset: fonts/Satoshi-Variable.ttf
+
+    - family: Satoshi-bold
+      fonts:
+        - asset: fonts/Satoshi-Bold.otf
+
+    - family: Satoshi-regular
+      fonts:
+        - asset: fonts/Satoshi-Regular.otf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

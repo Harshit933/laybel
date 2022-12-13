@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
-class MessagePage extends StatefulWidget {
-  const MessagePage({Key? key}) : super(key: key);
+class Message extends StatefulWidget {
+  const Message({Key? key}) : super(key: key);
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  State<Message> createState() => _MessageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
+class _MessageState extends State<Message> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        'Message Page',
+    return SafeArea(
+      child: Column(
+        children: [
+          Center(
+            child: Text(
+              'Message Page',
+            ),
+          )
+        ],
       ),
     );
   }

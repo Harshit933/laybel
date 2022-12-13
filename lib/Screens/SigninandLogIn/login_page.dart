@@ -1,59 +1,71 @@
 import 'package:figma_squircle/figma_squircle.dart';
-import 'package:firebase/Screens/SigninandLogIn/verify_email.dart';
+import 'package:firebase/Screens/Home%20and%20Directory/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../Const/fonts.dart';
-import '../../resources/firebase_auth.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
-
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
-  final _confirmPassword = TextEditingController();
-  late var var1;
+  late bool _issignedIn;
 
-  void signUp() async {
-    if (_password.text.trim() == _confirmPassword.text.trim()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  /// Try Catch
+  Future signUp() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _email.text.trim(), password: _password.text.trim());
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  Future check() async {
+    User? chec = await FirebaseAuth.instance.currentUser;
+    if (chec != null) {
+      _issignedIn = true;
+    } else {
+      _issignedIn = false;
     }
   }
 
   @override
   void dispose() {
+    _email.dispose();
     _password.dispose();
-    _confirmPassword.dispose();
     super.dispose();
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    Auth auth = Auth();
     return Scaffold(
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 30),
-              child: Row(
-                children: [
-                  Text(
-                    'Create\nAccount',
-                    style: font,
+              padding: EdgeInsets.symmetric(horizontal: 31),
+              child: Container(
+                child: Text(
+                  'Welcome\nback!',
+                  style: GoogleFonts.spaceGrotesk(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 40,
+                    color: Color.fromRGBO(0, 0, 0, 0.5),
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 31, right: 31, top: 16),
+              padding:
+                  EdgeInsets.only(left: 31, right: 31, top: 16, bottom: 16),
               child: SizedBox(
                 height: 47,
                 child: TextField(
@@ -69,14 +81,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     filled: true,
                     fillColor: Color.fromRGBO(218, 218, 218, 1),
-                    hintText: 'Email',
-                    hintStyle: placeholder,
+                    hintText: 'E-mail or username',
+                    hintStyle: GoogleFonts.spaceGrotesk(
+                      fontSize: 14,
+                      color: Color(0xff767676),
+                    ),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 31, right: 31, top: 15),
+              padding: EdgeInsets.only(left: 31, right: 31),
               child: SizedBox(
                 height: 47,
                 child: TextField(
@@ -94,48 +109,30 @@ class _RegisterPageState extends State<RegisterPage> {
                     filled: true,
                     fillColor: Color.fromRGBO(218, 218, 218, 1),
                     hintText: 'Password',
-                    hintStyle: placeholder,
+                    hintStyle: GoogleFonts.spaceGrotesk(
+                      fontSize: 14,
+                      color: Color(0xff767676),
+                    ),
                   ),
                 ),
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(left: 31, right: 31, top: 15),
-                child: SizedBox(
-                  height: 47,
-                  child: TextField(
-                    controller: _confirmPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(218, 218, 218, 1),
-                      hintText: 'Confirm Password',
-                      hintStyle: placeholder,
-                    ),
-                  ),
-                )),
-            Padding(
               // padding: EdgeInsets.symmetric(horizontal: 31, vertical: 16),
               padding: EdgeInsets.only(left: 31, right: 31, top: 16),
               child: GestureDetector(
-                onTap: () {
-                  auth.signUp(
-                    email: _email.text,
-                    password: _password.text,
-                  );
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => VerifyPage(Email: _email),
-                    ),
-                  );
+                onTap: () async {
+                  await signUp();
+                  await check();
+                  if (_issignedIn) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
+                  } else {
+                    print('Kuch galat ho rha hai');
+                  }
                 },
                 child: InkWell(
                   splashColor: Colors.white,
@@ -167,7 +164,24 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Forgot Password?',
+                  style: GoogleFonts.spaceGrotesk(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff111111),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 16,
             ),
           ],
         ),

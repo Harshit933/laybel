@@ -1,6 +1,9 @@
-import 'package:firebase/Screens/login_page.dart';
-import 'package:firebase/Screens/register_page.dart';
+import 'package:firebase/Screens/SigninandLogIn/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:figma_squircle/figma_squircle.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'login_page.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class startPage extends StatefulWidget {
   const startPage({Key? key}) : super(key: key);
@@ -24,12 +27,37 @@ class _startPageState extends State<startPage> {
               child: Container(
                 height: 49,
                 width: 297,
-                color: Color.fromRGBO(240, 240, 240, 1),
+                decoration: ShapeDecoration(
+                  color: Color(0xffd9d9d9),
+                  shape: SmoothRectangleBorder(
+                    borderRadius: SmoothBorderRadius(
+                      cornerRadius: 10,
+                      cornerSmoothing: 0.6,
+                    ),
+                  ),
+                ),
                 child: Center(
-                  child: Text(
-                    'Sign In with Google',
-                    selectionColor: Colors.black,
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Icon(
+                      //   FeatherIcons.gitCommit,
+                      //   size: 30,
+                      //   color: Colors.grey[700],
+                      // ),
+                      Image.asset('Icons/google icon.png'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Sign In with Google',
+                        style: GoogleFonts.spaceGrotesk(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -40,12 +68,24 @@ class _startPageState extends State<startPage> {
             Container(
               height: 49,
               width: 297,
-              color: Color.fromRGBO(59, 89, 152, 1),
+              decoration: ShapeDecoration(
+                color: Color.fromRGBO(59, 89, 152, 1),
+                shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius(
+                    cornerRadius: 10,
+                    cornerSmoothing: 0.6,
+                  ),
+                ),
+              ),
               child: Center(
                 child: Text(
                   'Sign In with FaceBook',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
+                  style: GoogleFonts.spaceGrotesk(
+                    color: Color(0xfff0f0f0),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -63,12 +103,24 @@ class _startPageState extends State<startPage> {
               child: Container(
                 height: 49,
                 width: 297,
-                color: Color.fromRGBO(25, 208, 120, 1),
+                decoration: ShapeDecoration(
+                  color: Color.fromRGBO(157, 62, 216, 1),
+                  shape: SmoothRectangleBorder(
+                    borderRadius: SmoothBorderRadius(
+                      cornerRadius: 10,
+                      cornerSmoothing: 0.6,
+                    ),
+                  ),
+                ),
                 child: Center(
                   child: Text(
                     'Sign Up',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black),
+                    style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Color(0xfff3f3f3),
+                    ),
                   ),
                 ),
               ),
@@ -81,7 +133,10 @@ class _startPageState extends State<startPage> {
               children: [
                 Text(
                   'Already have an account? ',
-                  style: TextStyle(),
+                  style: GoogleFonts.spaceGrotesk(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -91,10 +146,13 @@ class _startPageState extends State<startPage> {
                       ),
                     );
                   },
+                  //
                   child: Text(
                     'Log In',
-                    style: TextStyle(
-                      color: Color.fromRGBO(25, 208, 120, 1),
+                    style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Color.fromRGBO(157, 62, 216, 1),
                     ),
                   ),
                 ),
@@ -110,13 +168,19 @@ class _startPageState extends State<startPage> {
                 children: [
                   Text(
                     'By continuing you agree to our ',
-                    style: TextStyle(
-                        fontFamily: 'Inter', fontWeight: FontWeight.normal),
+                    style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12,
+                      color: Color(0xff111111),
+                    ),
                   ),
                   Text(
                     'Terms of service',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: 'Inter'),
+                    style: GoogleFonts.spaceGrotesk(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Color(0xff111111),
+                    ),
                   )
                 ],
               ),
