@@ -11,7 +11,9 @@ class FeedTab extends StatefulWidget {
   State<FeedTab> createState() => _FeedTabState();
 }
 
-class _FeedTabState extends State<FeedTab> {
+class _FeedTabState extends State<FeedTab> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   Future logOut() async {
     await FirebaseAuth.instance.signOut();
     print('Succesfully logged out');

@@ -41,8 +41,6 @@ class _FeedTabUIState extends State<FeedTabUI> {
         .doc(widget.snap['uid'])
         .get() as DocumentSnapshot;
 
-    print(king);
-
     if (king != null) {
       kingsnap = await king['profilephoto'];
     }

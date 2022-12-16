@@ -651,6 +651,7 @@ class _addPost2State extends State<addPost2> {
                   print(_categoryController.dropDownValue!.value);
                 },
                 child: GestureDetector(
+                  /// TODO resolve this screen bug.
                   onTap: () => postImage(
                     _user.uid!,
                     _user.usernameReal,

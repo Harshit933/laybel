@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'expolre_tab_helper.dart';
 
 class ExploreTab extends StatefulWidget {
   const ExploreTab({Key? key}) : super(key: key);
@@ -8,16 +11,17 @@ class ExploreTab extends StatefulWidget {
   State<ExploreTab> createState() => _ExploreTabState();
 }
 
-class _ExploreTabState extends State<ExploreTab> {
+class _ExploreTabState extends State<ExploreTab>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 12, right: 12, top: 12),
+          padding: EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 12),
           child: SizedBox(
-            // height: 47,
-            // width: 328,
             child: TextField(
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 16),
@@ -39,35 +43,31 @@ class _ExploreTabState extends State<ExploreTab> {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(2, 18, 2, 2),
-          child: Row(
-            children: [
-              Container(
-                // padding: EdgeInsets.fromLTRB(2, 18, 2, 2),
-                height: 121,
-                width: 121,
-                color: Colors.grey,
+        StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            return Expanded(
+              child: GridView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: snapshot.data!.docs.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return ExploreTabHelper(
+                    snap: snapshot.data!.docs[index],
+                  );
+                },
               ),
-              SizedBox(
-                width: 2,
-              ),
-              Container(
-                height: 121,
-                width: 121,
-                color: Colors.grey,
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Container(
-                height: 121,
-                width: 121,
-                color: Colors.grey,
-              ),
-            ],
-          ),
-        )
+            );
+          },
+        ),
       ],
     );
   }

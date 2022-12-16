@@ -249,7 +249,9 @@ class _addPostState extends State<addPost> {
                       fillColor: Color.fromRGBO(218, 218, 218, 1),
                       hintText: 'Enter Location',
                       hintStyle: TextStyle(
-                          fontFamily: 'Satoshi-regular', fontSize: 14),
+                        fontFamily: 'Satoshi-regular',
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),

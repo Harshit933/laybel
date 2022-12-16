@@ -43,7 +43,6 @@ class _MyshopPageState extends State<MyshopPage> {
                     await provider.refreshUser();
                   },
                   child: CircleAvatar(
-                    // backgroundColor: Color.fromRGBO(157, 62, 216, 1),
                     backgroundImage: NetworkImage(_user.profilephoto),
                     radius: 54,
                   ),
