@@ -42,7 +42,7 @@ class _FeedTabState extends State<FeedTab> with AutomaticKeepAliveClientMixin {
             ),
             StreamBuilder(
               stream:
-                  FirebaseFirestore.instance.collection('posts').snapshots(),
+              FirebaseFirestore.instance.collection('posts').snapshots(),
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,3 +66,21 @@ class _FeedTabState extends State<FeedTab> with AutomaticKeepAliveClientMixin {
     );
   }
 }
+
+/*
+Future<List> getData() async {
+    Stream<QuerySnapshot<Map<String, dynamic>>> myStream =
+        await FirebaseFirestore.instance.collection('posts').snapshots();
+    myStream.listen((QuerySnapshot<Map<String, dynamic>> snapshot) {
+      List<DocumentSnapshot<Map<String, dynamic>>> documents = snapshot.docs;
+      for (DocumentSnapshot<Map<String, dynamic>> document in documents) {
+        list.add(PostModel.fromSnap(document));
+      }
+    }, onError: (error) {
+      debugPrintStack();
+      throw Exception("Something went wrong in accessing posts object");
+    });
+    debugPrint(list.toString());
+    return list;
+  }
+ */

@@ -20,21 +20,20 @@ class _ToggleScreenState extends State<ToggleScreen> {
   }
 
   Future<void> addData() async {
-    UserProvider _userprovider = Provider.of(context, listen: false);
-    await _userprovider.refreshUser();
+    UserProvider userprovider = Provider.of(context, listen: false);
+    await userprovider.refreshUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return const HomePage();
           } else {
-            return startPage();
+            return const startPage();
           }
         },
       ),

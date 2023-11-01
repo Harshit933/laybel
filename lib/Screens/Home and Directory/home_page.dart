@@ -3,11 +3,9 @@ import 'package:firebase/Screens/Home%20and%20Directory/user_home.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_message.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_notif.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/user_profile.dart';
-import 'package:firebase/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isLogOut = false;
   int _selectedIndex = 0;
 
   void _navigateBottomBar(int index) {
@@ -27,11 +24,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<dynamic> page = [
-    HomePageReal(),
-    Message(),
-    PostPage(),
-    NotificationPage(),
-    ProfilePage(),
+    const HomePageReal(),
+    const Message(),
+    const PostPage(),
+    const NotificationPage(),
+    const ProfilePage(),
   ];
 
   //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage())),
@@ -39,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // addData();
   }
 
   @override
@@ -48,8 +44,8 @@ class _HomePageState extends State<HomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(243, 243, 243, 1),
-          foregroundColor: Color.fromRGBO(243, 243, 243, 1),
+          backgroundColor: const Color.fromRGBO(243, 243, 243, 1),
+          foregroundColor: const Color.fromRGBO(243, 243, 243, 1),
           toolbarHeight: 60,
           centerTitle: true,
           elevation: 0,
@@ -81,13 +77,12 @@ class _HomePageState extends State<HomePage> {
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.grey,
           type: BottomNavigationBarType.fixed,
-          items: [
+          items: const [
             BottomNavigationBarItem(
               backgroundColor: Color.fromRGBO(243, 243, 243, 1),
               icon: Icon(
                 FeatherIcons.home,
                 size: 30,
-                color: Colors.grey[700],
               ),
               label: '',
               // tooltip: 'Home',
@@ -97,7 +92,6 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 FeatherIcons.messageSquare,
                 size: 30,
-                color: Colors.grey[700],
               ),
               label: '',
             ),
@@ -106,7 +100,6 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 FeatherIcons.plusCircle,
                 size: 30,
-                color: Colors.grey[700],
               ),
               label: '',
             ),
@@ -115,7 +108,6 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 FeatherIcons.heart,
                 size: 30,
-                color: Colors.grey[700],
               ),
               label: '',
             ),
@@ -124,7 +116,6 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(
                 FeatherIcons.box,
                 size: 30,
-                color: Colors.grey[700],
               ),
               label: '',
             ),

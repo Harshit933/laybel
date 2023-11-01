@@ -5,13 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class PostModel {
   final String? uid;
-  final List<String> photoUrl;
+  final List<dynamic> photoUrl;
   final String Description;
   final String Location;
   final String Department;
   final String Category;
   final String brand;
-  final List<String> Sizes;
+  final List<dynamic> Sizes;
   final String prize;
   final String usernameReal;
   final List likes;
@@ -67,7 +67,7 @@ class PostModel {
       usernameReal: snapshot['usernameReal'],
       likes: snapshot['likes'],
       postId: snapshot['postId'],
-      datePublished: snapshot['datePublished'],
+      datePublished: DateTime.timestamp(),
     );
   }
 }

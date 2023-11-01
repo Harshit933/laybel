@@ -2,7 +2,6 @@ import 'package:firebase/Auth/toggle_auth_home.dart';
 import 'package:firebase/Screens/Home%20and%20Directory/home_page.dart';
 import 'package:firebase/provider/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
           // '/second': (context) => const SecondScreen(),
         },
         debugShowCheckedModeBanner: false,
-        home: ToggleScreen(),
+        home: const ToggleScreen(),
       ),
     );
   }

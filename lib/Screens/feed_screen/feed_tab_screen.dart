@@ -23,7 +23,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
 
   // it will return true if the post is already liked by user and will return false otherwise
   bool checkLikeforAnimation(String uid, List likes) {
-    if (widget.snap['likes'].contains(uid)) {
+    if (widget.snap.likes.contains(uid)) {
       return true;
     }
     return false;
@@ -31,7 +31,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
 
   @override
   void initState() {
-    searchKing();
+    // searchKing();
     super.initState();
   }
 
@@ -58,31 +58,31 @@ class _FeedTabUIState extends State<FeedTabUI> {
               SizedBox(
                 width: 10,
               ),
-              FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(widget.snap['uid'])
-                    .get(),
-                builder: ((context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else {
-                    DocumentSnapshot data = snapshot.data! as DocumentSnapshot;
-                    return CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.transparent,
-                      child: ClipOval(
-                        child: Image.network(
-                          data['profilephoto'],
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.fitHeight,
-                        ),
-                      ),
-                    );
-                  }
-                }),
-              ),
+              // FutureBuilder(
+              //   future: FirebaseFirestore.instance
+              //       .collection('Users')
+              //       .doc(widget.snap['uid'])
+              //       .get(),
+              //   builder: ((context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return CircularProgressIndicator();
+              //     } else {
+              //       DocumentSnapshot data = snapshot.data! as DocumentSnapshot;
+              //       return CircleAvatar(
+              //         radius: 15,
+              //         backgroundColor: Colors.transparent,
+              //         child: ClipOval(
+              //           child: Image.network(
+              //             data['profilephoto'],
+              //             width: 100,
+              //             height: 100,
+              //             fit: BoxFit.fitHeight,
+              //           ),
+              //         ),
+              //       );
+              //     }
+              //   }),
+              // ),
               SizedBox(
                 width: 10,
               ),
@@ -90,7 +90,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
                 onTap: () {},
                 child: Container(
                   child: Text(
-                    '${widget.snap['usernameReal']}',
+                    '${widget.snap.usernameReal}',
                     style: headingfont,
                   ),
                 ),
@@ -105,11 +105,11 @@ class _FeedTabUIState extends State<FeedTabUI> {
             height: 350,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: widget.snap['photoUrl'].length,
+              itemCount: widget.snap.photoUrl.length,
               itemBuilder: (context, index) {
                 return Expanded(
                   child: Image.network(
-                    widget.snap['photoUrl'][index],
+                    widget.snap.photoUrl[index],
                     fit: BoxFit.fill,
                     alignment: Alignment.center,
                   ),
@@ -124,13 +124,13 @@ class _FeedTabUIState extends State<FeedTabUI> {
                   FirestoreMethods firestore = FirestoreMethods();
                   firestore.addLikes(
                     user.uid!,
-                    widget.snap['postId'].toString(),
-                    widget.snap['likes'],
+                    widget.snap.postId.toString(),
+                    widget.snap.likes,
                   );
                 },
                 icon: Icon(
                   FeatherIcons.heart,
-                  color: checkLikeforAnimation(user.uid!, widget.snap['likes'])
+                  color: checkLikeforAnimation(user.uid!, widget.snap.likes)
                       ? Colors.red
                       : Colors.black,
                 ),
@@ -139,18 +139,9 @@ class _FeedTabUIState extends State<FeedTabUI> {
                 width: 1,
               ),
               IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CommentsScreen(
-                        snap: widget.snap,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: () {},
                 icon: Icon(
-                  FeatherIcons.messageSquare,
+                  FeatherIcons.bookmark,
                 ),
               ),
               SizedBox(
@@ -169,7 +160,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
             child: Row(
               children: [
                 Text(
-                  '${widget.snap['likes'].length} likes',
+                  '${widget.snap.likes.length} likes',
                   style: likesfont,
                 ),
               ],
@@ -183,11 +174,11 @@ class _FeedTabUIState extends State<FeedTabUI> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: RichText(
                     text: TextSpan(
-                      text: '${widget.snap['usernameReal']} ',
+                      text: '${widget.snap.usernameReal} ',
                       style: profilefont,
                       children: [
                         TextSpan(
-                          text: widget.snap['Description'],
+                          text: widget.snap.Description,
                           style: containerfont,
                         ),
                       ],
@@ -210,7 +201,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
                       style: profilefont,
                       children: [
                         TextSpan(
-                            text: '${widget.snap['brand']}',
+                            text: '${widget.snap.brand}',
                             style: containerfont)
                       ],
                     ),
@@ -224,7 +215,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
                       style: profilefont,
                       children: [
                         TextSpan(
-                          text: widget.snap['Sizes'].toString(),
+                          text: widget.snap.Sizes.toString(),
                           style: containerfont,
                         ),
                       ],
@@ -250,7 +241,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
                       style: profilefont,
                       children: [
                         TextSpan(
-                            text: widget.snap['prize'], style: containerfont)
+                            text: widget.snap.prize, style: containerfont)
                       ],
                     ),
                   ),
@@ -260,7 +251,7 @@ class _FeedTabUIState extends State<FeedTabUI> {
                   child: RichText(
                     text: TextSpan(
                       text: DateFormat.yMMMd().format(
-                        widget.snap['datePublished'].toDate(),
+                        widget.snap.datePublished,
                       ),
                       style: profilefont,
                       children: [],
